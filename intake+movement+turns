@@ -1,0 +1,71 @@
+package org.firstinspires.ftc.teamcode;
+
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+
+@TeleOp(name = "Gamepad2 (Blocks to Java)", group = "")
+public class Gamepad2 extends LinearOpMode {
+
+  private DcMotor motorIntake;
+  private DcMotor motorleft;
+  private DcMotor motorright;
+  double intakePower= 0;
+  double lWheelPower= 0;
+  double rWheelPower= 0;
+  
+
+
+  /**
+   * This function is executed when this Op Mode is selected from the Driver Station.
+   */
+  @Override
+  public void runOpMode() {
+    motorIntake = hardwareMap.dcMotor.get("motorIntake");
+    motorleft = hardwareMap.dcMotor.get("motorleft");
+    motorright = hardwareMap.dcMotor.get("motorright");
+    // Put initialization blocks here.
+    waitForStart();
+
+    if (opModeIsActive()) {
+      
+        // for(int i=100000; i>0 ; --i) {
+        // motorIntake.setPower(-1.0);
+        // motorleft.setPower(0);
+        // try {
+        //   this.wait(1); 
+        //   motorIntake.setPower(0);
+        //   motorleft.setPower(0);
+        // } catch (Exception e) {
+        // }
+        // }  
+    
+    
+      
+      while (opModeIsActive()) {
+        
+      
+        intakePower = -this.gamepad1.left_trigger;
+        lWheelPower = this.gamepad1.right_stick_y;
+        rWheelPower = -this.gamepad1.right_stick_y;
+        telemetry.addData("Target Power", intakePower);
+        telemetry.addData("Motor Power", motorIntake.getPower());
+        telemetry.addData("Target Power 2", lWheelPower);
+        telemetry.addData("Motor Power 2", motorleft.getPower());
+        telemetry.addData("Motor Power 3", motorright.getPower());
+        motorIntake.setPower(intakePower);
+        motorleft.setPower(lWheelPower);
+        motorright.setPower(rWheelPower);
+        // if(gamepad1.dpad_right == true || gamepad1.dpad_left == true){
+        if(gamepad1.dpad_right == true){
+          motorright.setPower(-0);
+          motorleft.setPower(0.5);
+        }
+        if(gamepad1.dpad_left == true){
+          motorleft.setPower(-0);
+          motorright.setPower(0.5);
+        }
+      }
+    }
+  }
+}
